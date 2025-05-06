@@ -31,6 +31,7 @@ public class User {
     public User(UserDTO data) {
         this.firstname = data.firstName();
         this.lastname = data.lastName();
+        this.document = data.document();
         this.email = data.email();
         this.password = data.password();
         this.balance = data.balance();
