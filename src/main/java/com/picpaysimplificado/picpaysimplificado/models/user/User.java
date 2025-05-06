@@ -1,5 +1,6 @@
 package com.picpaysimplificado.picpaysimplificado.models.user;
 
+import com.picpaysimplificado.picpaysimplificado.dtos.UserDTO;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -25,4 +26,13 @@ public class User {
     private String password;
     private BigDecimal balance;
     private UserType userType;
+
+    public User(UserDTO data) {
+        this.firstname = data.firstName();
+        this.lastname = data.lastName();
+        this.email = data.email();
+        this.password = data.password();
+        this.balance = data.balance();
+        this.userType = data.userType();
+    }
 }

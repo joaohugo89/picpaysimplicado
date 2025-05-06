@@ -1,8 +1,10 @@
 package com.picpaysimplificado.picpaysimplificado.services;
 
+import com.picpaysimplificado.picpaysimplificado.dtos.UserDTO;
 import com.picpaysimplificado.picpaysimplificado.models.user.User;
 import com.picpaysimplificado.picpaysimplificado.models.user.UserType;
 import com.picpaysimplificado.picpaysimplificado.repositories.UserRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -38,5 +40,11 @@ public class UserService {
     public void saveUser(User user) {
         // Lógica para criar um novo usuário
         this.userRepository.save(user);
+    }
+
+    public User createUser(UserDTO data) {
+        User newUser = new User(data);
+        this.saveUser(newUser);
+        return newUser;
     }
 }
