@@ -23,7 +23,7 @@ public class NotificationService {
 
         //if (!(response.getStatusCode() == HttpStatus.OK)) {
         //    System.out.println("Erro ao enviar notificacao");
-        //    throw new Exception("Service unavailable");
+        //    throw new Exception("Service of notification unavailable");
         //}
 
         System.out.println("Notificacao enviada para o o usuario");
