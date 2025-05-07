@@ -63,7 +63,7 @@ public class TransactionService {
 
         Transaction transaction = new Transaction();
         transaction.setReceiver(user);
-        transaction.setSender(user);
+        transaction.setSender(null);
         transaction.setAmount(amount);
         transaction.setTimestamp(LocalDateTime.now());
         transaction.setType(TransactionType.DEPOSIT);
@@ -85,7 +85,7 @@ public class TransactionService {
 
         Transaction transaction = new Transaction();
         transaction.setSender(user);
-        transaction.setReceiver(user);
+        transaction.setReceiver(null);
         transaction.setAmount(amount);
         transaction.setTimestamp(LocalDateTime.now());
         transaction.setType(TransactionType.WITHDRAWAL);

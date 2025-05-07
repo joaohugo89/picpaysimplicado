@@ -1,6 +1,5 @@
 package com.picpaysimplificado.picpaysimplificado.models.financiation;
 
-import com.picpaysimplificado.picpaysimplificado.models.transaction.TransactionType;
 import com.picpaysimplificado.picpaysimplificado.models.user.User;
 import jakarta.persistence.*;
 import lombok.*;
@@ -26,7 +25,7 @@ public class FinancialRecord {
     private BigDecimal amount;
     private String category; // ex: "Alimentação", "Transporte"
     private String description;
-    private TransactionType type;
+    private FinanciationType type;
 
     private LocalDateTime date;
 }

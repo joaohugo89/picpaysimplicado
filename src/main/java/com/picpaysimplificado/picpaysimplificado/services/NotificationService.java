@@ -3,6 +3,8 @@ package com.picpaysimplificado.picpaysimplificado.services;
 import com.picpaysimplificado.picpaysimplificado.dtos.NotificationDTO;
 import com.picpaysimplificado.picpaysimplificado.models.user.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -17,14 +19,14 @@ public class NotificationService {
         String email = user.getEmail();
         NotificationDTO notificationRequest = new NotificationDTO(email, message);
 
-        //ResponseEntity<String> response = restTemplate.postForEntity("https://util.devi.tools/api/v1/notify", notificationRequest, String.class);
+        ResponseEntity<String> response = restTemplate.postForEntity("https://util.devi.tools/api/v1/notify", notificationRequest, String.class);
 
-        //if (!(response.getStatusCode() == HttpStatus.OK)) {
-        //    System.out.println("Erro ao enviar notificacao");
-        //    throw new Exception("Service of notification unavailable");
-        //}
+        if (!(response.getStatusCode() == HttpStatus.OK)) {
+            System.out.println("Erro ao enviar notificacao");
+            throw new Exception("Service of notification unavailable");
+        }
 
-        System.out.println("Notificacao enviada para o o usuario");
+        //System.out.println("Notificacao enviada para o o usuario");
     }
 
 }

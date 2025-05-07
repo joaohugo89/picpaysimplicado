@@ -1,6 +1,7 @@
 package com.picpaysimplificado.picpaysimplificado.models.transaction;
 
 import com.picpaysimplificado.picpaysimplificado.models.user.User;
+import com.picpaysimplificado.picpaysimplificado.repositories.UserRepository;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -31,4 +32,11 @@ public class Transaction {
 
     private LocalDateTime timestamp;
 
+    public Transaction(BigDecimal amount, User sender, User receiver, TransactionType transactionType) {
+        this.sender = sender;
+        this.receiver = receiver;
+        this.amount = amount;
+        this.type = transactionType;
+        this.timestamp = LocalDateTime.now();
+    }
 }

@@ -2,7 +2,7 @@ package com.picpaysimplificado.picpaysimplificado.controllers;
 
 import com.picpaysimplificado.picpaysimplificado.models.financiation.FinancialGoal;
 import com.picpaysimplificado.picpaysimplificado.models.financiation.FinancialRecord;
-import com.picpaysimplificado.picpaysimplificado.models.transaction.TransactionType;
+import com.picpaysimplificado.picpaysimplificado.models.financiation.FinanciationType;
 import com.picpaysimplificado.picpaysimplificado.services.FinancialGoalService;
 import com.picpaysimplificado.picpaysimplificado.services.FinancialRecordService;
 
@@ -30,7 +30,7 @@ public class FinancialController {
             @RequestParam BigDecimal amount,
             @RequestParam String description,
             @RequestParam(required = false) String category,
-            @RequestParam(required = false) TransactionType type) throws Exception {
+            @RequestParam(required = false) FinanciationType type) throws Exception {
         return financialRecordService.addFinancialRecord(userId, amount, description, category, type);
     }
 

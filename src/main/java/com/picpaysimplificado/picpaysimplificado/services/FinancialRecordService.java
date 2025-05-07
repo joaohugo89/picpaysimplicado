@@ -1,7 +1,7 @@
 package com.picpaysimplificado.picpaysimplificado.services;
 
 import com.picpaysimplificado.picpaysimplificado.models.financiation.FinancialRecord;
-import com.picpaysimplificado.picpaysimplificado.models.transaction.TransactionType;
+import com.picpaysimplificado.picpaysimplificado.models.financiation.FinanciationType;
 import com.picpaysimplificado.picpaysimplificado.models.user.User;
 import com.picpaysimplificado.picpaysimplificado.repositories.FinancialRecordRepository;
 import com.picpaysimplificado.picpaysimplificado.utils.DateTimeUtils;
@@ -20,7 +20,7 @@ public class FinancialRecordService {
     @Autowired
     private UserService userService;
 
-    public FinancialRecord addFinancialRecord(Long userId, BigDecimal amount, String category, String description, TransactionType type) throws Exception {
+    public FinancialRecord addFinancialRecord(Long userId, BigDecimal amount, String category, String description, FinanciationType type) throws Exception {
         User user = userService.getUserById(userId);
         FinancialRecord record = new FinancialRecord();
         record.setUser(user);
