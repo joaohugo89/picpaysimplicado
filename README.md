@@ -1,4 +1,4 @@
-# Authentication API
+# Picpay Simplificado API
 
 ![Java](https://img.shields.io/badge/java-%23ED8B00.svg?style=for-the-badge&logo=openjdk&logoColor=white)
 ![Spring](https://img.shields.io/badge/spring-%236DB33F.svg?style=for-the-badge&logo=spring&logoColor=white)
@@ -15,6 +15,7 @@ The Unit tests was developed with the aim to demonstrate how to write unit tests
 - [Installation](#installation)
 - [Configuration](#configuration)
 - [Usage](#usage)
+- [Práticas adotadas](#praticas-adotadas)
 - [API Endpoints](#api-endpoints)
 - [Database](#database)
 - [Contributing](#contributing)
@@ -34,6 +35,16 @@ git clone https://github.com/joaohugo89/picpaysimplificado.git
 1. Start the application with Maven
 2. The API will be accessible at http://localhost:8080
 
+## Práticas adotadas
+
+- API REST
+- Consultas com Spring Data JPA
+- Injeção de Dependências
+- Tratamento de respostas de erro
+- Geração automática do Swagger com a OpenAPI 3
+
+A API poderá ser acessada em [localhost:8080](http://localhost:8080).
+O Swagger poderá ser visualizado em [localhost:8080/swagger-ui.html](http://localhost:8080/swagger-ui.html)
 
 ## API Endpoints
 The API provides the following endpoints:
