@@ -28,7 +28,7 @@ class UserRepositoryTest {
 
     @Test
     @DisplayName("Should get User successfully from DB")
-    void findUserByDocument() {
+    void findUserByDocumentSuccess() {
         String document = "12345678900";
         UserDTO data = new UserDTO("John",
                                    "Doe",
@@ -42,6 +42,15 @@ class UserRepositoryTest {
         Optional<User> result = this.userRepository.findUserByDocument(document);
 
         assertThat(result.isPresent()).isTrue();
+    }
+
+    @Test
+    @DisplayName("Should not get User from DB when document does not exist")
+    void findUserByDocumentNotFound() {
+        String document = "12345678900";
+        Optional<User> result = this.userRepository.findUserByDocument(document);
+
+        assertThat(result.isPresent()).isFalse();
     }
 
     private User createUser(UserDTO data) {
