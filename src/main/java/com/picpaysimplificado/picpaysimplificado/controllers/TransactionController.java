@@ -8,6 +8,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
+
 @RestController
 @CrossOrigin(origins = "*")
 @RequestMapping("/transactions")
@@ -19,7 +21,19 @@ public class TransactionController {
     @PostMapping
     public ResponseEntity<Transaction> createTransaction(@RequestBody TransactionDTO transactionDTO) throws Exception {
         // Implement the logic to create a transaction
-        Transaction transaction = this.transactionService.createTransaction(transactionDTO);
+        Transaction transaction = this.transactionService.createTransfer(transactionDTO);
+        return new ResponseEntity<>(transaction, HttpStatus.OK);
+    }
+
+    @PostMapping("/deposit/{id}/{amount}")
+    public ResponseEntity<Transaction> deposit(@PathVariable Long id, @PathVariable BigDecimal amount) throws Exception {
+        Transaction transaction = this.transactionService.deposit(id, amount);
+        return new ResponseEntity<>(transaction, HttpStatus.OK);
+    }
+
+    @PostMapping("/withdraw/{id}/{amount}")
+    public ResponseEntity<Transaction> withdraw(@PathVariable Long id, @PathVariable BigDecimal amount) throws Exception {
+        Transaction transaction = this.transactionService.withdraw(id, amount);
         return new ResponseEntity<>(transaction, HttpStatus.OK);
     }
 }

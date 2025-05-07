@@ -1,6 +1,7 @@
 package com.picpaysimplificado.picpaysimplificado.services;
 
 import com.picpaysimplificado.picpaysimplificado.dtos.UserDTO;
+import com.picpaysimplificado.picpaysimplificado.models.transaction.TransactionType;
 import com.picpaysimplificado.picpaysimplificado.models.user.User;
 import com.picpaysimplificado.picpaysimplificado.models.user.UserType;
 import com.picpaysimplificado.picpaysimplificado.repositories.UserRepository;
@@ -22,7 +23,7 @@ public class UserService {
         return this.userRepository.findAll(); // Retorne a lista de usuários
     }
 
-    public void validateTransaction(User sender, BigDecimal amount) throws Exception {
+    public void validateTransference(User sender, BigDecimal amount, TransactionType type) throws Exception {
         // Lógica para validar a transação
         if (sender.getBalance().compareTo(amount) < 0) {
             throw new Exception("Sender does not have enough balance.");
@@ -30,6 +31,34 @@ public class UserService {
         if (sender.getUserType() == UserType.MERCHANT) {
             throw new Exception("Sender is a merchant and cannot send money.");
         }
+        if (type != TransactionType.TRANSFER) {
+            throw new Exception("User cannot transfer money between accounts.");
+        }
+    }
+
+    public void validateTransaction(User user, BigDecimal amount) throws Exception {
+        // Lógica para validar o depósito
+        if (user.getBalance().compareTo(amount) < 0) {
+            throw new Exception("Sender does not have enough balance.");
+        }
+        if (user.getUserType() == UserType.MERCHANT) {
+            throw new Exception("Sender is a merchant and cannot send money.");
+        }
+
+    }
+
+    public void refillBalance(Long userId, BigDecimal amount) throws Exception {
+        User user = getUserById(userId);
+        user.setBalance(user.getBalance().add(amount));
+        userRepository.save(user);
+    }
+
+    public void withdrawBalance(Long userId, BigDecimal amount) throws Exception {
+        User user = getUserById(userId);
+        if (user.getBalance().compareTo(amount) < 0)
+            throw new Exception("Insufficient balance");
+        user.setBalance(user.getBalance().subtract(amount));
+        userRepository.save(user);
     }
 
     public User getUserById(Long id) throws Exception{

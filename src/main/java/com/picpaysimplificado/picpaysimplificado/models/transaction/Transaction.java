@@ -25,6 +25,10 @@ public class Transaction {
     @ManyToOne
     @JoinColumn(name = "receiver_id", nullable = false)
     private User receiver;
+
+    @Enumerated(EnumType.STRING)
+    private TransactionType type;
+
     private LocalDateTime timestamp;
 
 }

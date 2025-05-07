@@ -57,14 +57,14 @@ class UserServiceTest {
 
     @Test
     @DisplayName("Should validate transaction successfully")
-    void validateTransaction_shouldPass() {
+    void validateTranference_shouldPass() {
         assertThatCode(() -> userService.validateTransaction(commonUser, new BigDecimal("50.00")))
                 .doesNotThrowAnyException();
     }
 
     @Test
     @DisplayName("Should throw exception when balance is insufficient")
-    void validateTransaction_insufficientBalance_shouldThrow() {
+    void validateTranference_insufficientBalance_shouldThrow() {
         assertThatThrownBy(() -> userService.validateTransaction(commonUser, new BigDecimal("150.00")))
                 .isInstanceOf(Exception.class)
                 .hasMessage("Sender does not have enough balance.");
@@ -72,7 +72,7 @@ class UserServiceTest {
 
     @Test
     @DisplayName("Should throw exception if sender is merchant")
-    void validateTransaction_merchant_shouldThrow() {
+    void validateTranference_merchant_shouldThrow() {
         commonUser.setUserType(UserType.MERCHANT);
         assertThatThrownBy(() -> userService.validateTransaction(commonUser, new BigDecimal("10.00")))
                 .isInstanceOf(Exception.class)
@@ -110,5 +110,25 @@ class UserServiceTest {
         User result = userService.createUser(userDTO);
         verify(userRepository).save(any(User.class));
         assertThat(result.getDocument()).isEqualTo("12345678900");
+    }
+
+    @Test
+    @DisplayName("Should refill user balance")
+    void refillBalance() throws Exception {
+        when(userRepository.findById(1L)).thenReturn(Optional.of(commonUser));
+        userService.refillBalance(1L, new BigDecimal("50.00"));
+        assertThat(commonUser.getBalance()).isEqualTo(new BigDecimal("150.00"));
+        verify(userRepository).save(commonUser);
+    }
+
+    @Test
+    @DisplayName("Should throw exception when refilling balance fails")
+    void withdrawBalance() {
+        commonUser.setBalance(new BigDecimal("200.00"));
+        when(userRepository.findById(1L)).thenReturn(Optional.of(commonUser));
+        assertThatCode(() -> userService.withdrawBalance(1L, new BigDecimal("50.00")))
+                .doesNotThrowAnyException();
+        assertThat(commonUser.getBalance()).isEqualTo(new BigDecimal("150.00"));
+        verify(userRepository).save(commonUser);
     }
 }

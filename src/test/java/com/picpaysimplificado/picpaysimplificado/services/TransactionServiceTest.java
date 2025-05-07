@@ -1,5 +1,6 @@
 package com.picpaysimplificado.picpaysimplificado.services;
 
+import com.picpaysimplificado.picpaysimplificado.models.transaction.TransactionType;
 import com.picpaysimplificado.picpaysimplificado.models.user.User;
 import com.picpaysimplificado.picpaysimplificado.models.user.UserType;
 import com.picpaysimplificado.picpaysimplificado.dtos.TransactionDTO;
@@ -55,8 +56,8 @@ class TransactionServiceTest {
 
         when(authorizationService.authorizeTransaction(any(), any())).thenReturn(true);
 
-        TransactionDTO request = new TransactionDTO(new BigDecimal(20), 1L, 2L );
-        transactionService.createTransaction(request);
+        TransactionDTO request = new TransactionDTO(new BigDecimal(20), 1L, 2L , TransactionType.TRANSFER);
+        transactionService.createTransfer(request);
         verify(transactionRepository, times(1)).save(any());
 
         sender.setBalance(new BigDecimal(90));
@@ -64,8 +65,8 @@ class TransactionServiceTest {
         receiver.setBalance(new BigDecimal(70));
         verify(userService, times(1)).saveUser(receiver);
 
-        verify(notificationService, times(1)).sendNotification(sender, "Transaction of " + request.amount() + " to " + receiver.getFirstname());
-        verify(notificationService, times(1)).sendNotification(receiver, "Transaction of " + request.amount() + " from " + sender.getFirstname());
+        verify(notificationService, times(1)).sendNotification(sender, "Transfer of " + request.amount() + " to " + receiver.getFirstname());
+        verify(notificationService, times(1)).sendNotification(receiver, "Transfer of " + request.amount() + " from " + sender.getFirstname());
 
 
     }
@@ -82,8 +83,8 @@ class TransactionServiceTest {
         when(authorizationService.authorizeTransaction(any(), any())).thenReturn(false);
 
         Exception thrown = Assertions.assertThrows(Exception.class, () -> {
-            TransactionDTO request = new TransactionDTO(new BigDecimal(10), 1L, 2L);
-            transactionService.createTransaction(request);
+            TransactionDTO request = new TransactionDTO(new BigDecimal(10), 1L, 2L, TransactionType.TRANSFER);
+            transactionService.createTransfer(request);
         });
 
         Assertions.assertEquals("Transaction not authorized.", thrown.getMessage());
