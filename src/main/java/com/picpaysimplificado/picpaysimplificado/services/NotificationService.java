@@ -3,8 +3,6 @@ package com.picpaysimplificado.picpaysimplificado.services;
 import com.picpaysimplificado.picpaysimplificado.dtos.NotificationDTO;
 import com.picpaysimplificado.picpaysimplificado.models.user.User;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
